@@ -32,7 +32,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // proxy all requests starting with /api to jsonplaceholder
+      // proxy all requests starting with /api to localhost:8081
       '/api': {
         target: 'http://localhost:8081',
         changeOrigin: true,
