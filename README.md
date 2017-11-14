@@ -103,7 +103,7 @@ Nginx should attempt to serve static files from your Vue app dist directory, for
 
 There should be one exception to this. For requests going to http://your-server/api/some-path, it should defer to your api server listening on localhost:8081.
 
-Here's and example Nginx configuration file you could use.
+Here's an example Nginx configuration file you could use.
 
 ```
 $ sudo vim /etc/nginx/sites-enabled/default
