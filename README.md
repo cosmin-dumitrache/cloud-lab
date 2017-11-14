@@ -72,3 +72,66 @@ $ npm run dev
 ```
 
 Now open your browser at: http://localhost:8080
+
+## Deploying to a cloud VM
+
+### The server
+
+In order to make it easy to daemonize the server, you can use a process manager like [PM2](http://pm2.keymetrics.io/).
+
+```
+$ pm2 start src/app.js
+```
+
+This will spawn your Node server listening on localhost:8081.
+
+### The client
+
+To build your Vue app for production, simply run:
+
+```
+$ npm run build
+```
+
+This will create an optimized version of your app inside a directory called ```dist```. This contains all the files needed to run your app in production. We will use Nginx to serve these static files.
+
+### Reverse proxy
+
+It's a good idea to have a reverse proxy listening on port 80. You can user [NGINX](https://nginx.org/) for that.
+
+Nginx should attempt to serve static files from your Vue app dist directory, for any request going to http://your-server/
+
+There should be one exception to this. For requests going to http://your-server/api/some-path, it should defer to your api server listening on localhost:8081.
+
+Here's an example Nginx configuration file you could use.
+
+```
+$ sudo vim /etc/nginx/sites-enabled/default
+```
+
+```
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+  # this should point to your Vue app dist directory
+	root /path/to/vue/app/dist/directory; 
+
+  # default files to serve from a directory
+	index index.html index.htm index.nginx-debian.html;
+
+	server_name _;
+
+  # serve static resources for Vue app when hitting /
+	location / {
+		try_files $uri $uri/ /index.html;
+	}
+
+  # proxy to node js api when hitting /api
+	location /api {
+		proxy_pass http://localhost:8081;
+		rewrite ^/api/?(.*) /$1 break;
+	}
+
+}
+```
