@@ -75,6 +75,10 @@ Now open your browser at: http://localhost:8080
 
 ## Deploying to a cloud VM
 
+### The database
+
+First, install and start a Mongo DB instance.
+
 ### The server
 
 In order to make it easy to daemonize the server, you can use a process manager like [PM2](http://pm2.keymetrics.io/).
