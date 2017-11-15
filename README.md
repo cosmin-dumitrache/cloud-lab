@@ -101,7 +101,7 @@ This will create an optimized version of your app inside a directory called ```d
 
 ### Reverse proxy
 
-It's a good idea to have a reverse proxy listening on port 80. You can user [NGINX](https://nginx.org/) for that.
+It's a good idea to have a reverse proxy listening on port 80. You can use [NGINX](https://nginx.org/) for that.
 
 Nginx should attempt to serve static files from your Vue app dist directory, for any request going to http://your-server/
 
